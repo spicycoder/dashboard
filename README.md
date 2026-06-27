@@ -98,7 +98,14 @@ Each `project/report/` directory needs a stub `index.html` that shows a friendly
 </html>
 ```
 
+### Adding a new project
+
+1. Create `project-name/coverage/index.html` and `project-name/stryker/index.html` stubs (see templates above)
+2. Add project to the `projects` array in `index.html`
+3. Add `GH_PAGES_TOKEN` secret (PAT with `repo` scope) to the project's GitHub repo
+4. In the project's CI, push coverage HTML to `project-name/coverage/` and/or stryker HTML to `project-name/stryker/` on the `gh-pages` branch
+
 ### Notes
 
-- Coverage reports are generated on merge. Mutation reports are generated nightly (separate scheduled workflow).
+- Coverage reports push on merge to `main`. Mutation reports run nightly (02:00 UTC).
 - Real report files overwrite the stubs automatically — no manual cleanup needed.
