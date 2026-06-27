@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="h-screen flex flex-col bg-gray-900 text-gray-100">
+  <header class="flex items-center gap-4 px-6 py-3 border-b border-gray-700 shrink-0">
+    <h1 class="text-lg font-semibold tracking-tight">Dashboard</h1>
+    <nav class="flex gap-1 ml-6" id="report-nav">
+      <button data-report="coverage" class="tab px-3 py-1 rounded text-sm bg-blue-600 text-white">Coverage</button>
+      <button data-report="stryker" class="tab px-3 py-1 rounded text-sm text-gray-400 hover:text-white">Mutation</button>
+    </nav>
+  </header>
+  <div class="flex flex-1 min-h-0">
+    <aside class="w-48 border-r border-gray-700 p-3 space-y-1 shrink-0 overflow-y-auto" id="project-nav">
+    </aside>
+    <main class="flex-1 min-w-0">
+      <iframe id="report-frame" class="w-full h-full bg-white"></iframe>
+    </main>
+  </div>
+  <script>
+    const projects = [
+      { id: 'scrum-poker', label: 'Scrum Poker', url: 'https://github.com/spicycoder/scrum-poker' },
+      { id: 'resume-analyzer', label: 'Resume Analyzer', url: 'https://github.com/spicycoder/resume-analyzer' },
+    ];
+
+    let project = projects[0].id, report = 'coverage';
+    const frame = document.getElementById('report-frame');
+    const projectNav = document.getElementById('project-nav');
+    const reportNav = document.getElementById('report-nav');
+
+    projects.forEach(p => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'flex items-center gap-1';
+      const btn = document.createElement('button');
+      btn.dataset.project = p.id;
+      btn.className = 'tab flex-1 block text-left px-3 py-1.5 rounded text-sm text-gray-400 hover:text-white hover:bg-gray-800';
+      btn.textContent = p.label;
+      wrapper.appendChild(btn);
+      if (p.url) {
+        const link = document.createElement('a');
+        link.href = p.url;
+        link.target = '_blank';
+        link.className = 'shrink-0 px-1.5 py-1.5 rounded text-gray-600 hover:text-gray-300 hover:bg-gray-800';
+        link.innerHTML = '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>';
+        wrapper.appendChild(link);
+      }
+      projectNav.appendChild(wrapper);
+    });
+
+    function load() {
+      frame.src = project + '/' + report + '/index.html';
+    }
+
+    function applyTabs() {
+      document.querySelectorAll('.tab').forEach(t => {
+        const isActive = t.dataset.project ? t.dataset.project === project : t.dataset.report === report;
+        if (t.dataset.project) {
+          t.className = 'tab flex-1 block text-left px-3 py-1.5 rounded text-sm ' + (isActive ? 'text-white bg-gray-700' : 'text-gray-400 hover:text-white hover:bg-gray-800');
+        } else {
+          t.className = 'tab px-3 py-1 rounded text-sm ' + (isActive ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white');
+        }
+      });
+    }
+
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('.tab');
+      if (!btn) return;
+      if (btn.dataset.project) project = btn.dataset.project;
+      if (btn.dataset.report) report = btn.dataset.report;
+      applyTabs();
+      load();
+    });
+
+    applyTabs();
+    load();
+  </script>
+</body>
+</html>
