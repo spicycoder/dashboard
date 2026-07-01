@@ -1,6 +1,6 @@
 # Dashboard
 
-Central dashboard for project reports — coverage (ReportGenerator) and mutation (Stryker).
+Central dashboard for project coverage reports.
 
 ## Adding a New Project
 
@@ -24,8 +24,6 @@ const projects = [
 
 A GitHub PAT with `contents:write` on this repo must be set as `PAT` secret in your project's repository.
 
-#### Coverage (on merge)
-
 ```yaml
 - uses: danielpalme/ReportGenerator-GitHub-Action@5
   with:
@@ -46,27 +44,9 @@ A GitHub PAT with `contents:write` on this repo must be set as `PAT` secret in y
     git push
 ```
 
-#### Mutation (nightly)
+### Stub Placeholder
 
-Same pattern, just replace `coverage` with `stryker`:
-
-```yaml
-- run: |
-    git clone --depth 1 https://x-access-token:${{ secrets.PAT }}@github.com/spicycoder/dashboard.git
-    rm -rf dashboard/my-project/stryker/
-    mkdir -p dashboard/my-project/stryker/
-    cp -r StrykerOutput/* dashboard/my-project/stryker/
-    cd dashboard
-    git config user.name "ci-bot"
-    git config user.email "ci-bot@users.noreply.github.com"
-    git add my-project/stryker/
-    git commit -m "my-project: update stryker"
-    git push
-```
-
-### Stub Placeholder Files
-
-Each `project/report/` directory needs a stub `index.html` that shows a friendly message until the first CI run overwrites it. Create one per report type:
+Each `project/` directory needs a stub `index.html` that shows a friendly message until the first CI run overwrites it:
 
 **Coverage stub** (`my-project/coverage/index.html`):
 ```html
@@ -83,29 +63,14 @@ Each `project/report/` directory needs a stub `index.html` that shows a friendly
 </html>
 ```
 
-**Mutation stub** (`my-project/stryker/index.html`):
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="h-screen flex flex-col items-center justify-center bg-gray-900 text-gray-400">
-  <p class="text-lg font-medium">Report not yet available</p>
-  <p class="text-sm mt-1">Mutation reports are generated nightly.</p>
-</body>
-</html>
-```
-
 ### Adding a new project
 
-1. Create `project-name/coverage/index.html` and `project-name/stryker/index.html` stubs (see templates above)
+1. Create `project-name/coverage/index.html` stub (see template above)
 2. Add project to the `projects` array in `index.html`
 3. Add `GH_PAGES_TOKEN` secret (PAT with `repo` scope) to the project's GitHub repo
-4. In the project's CI, push coverage HTML to `project-name/coverage/` and/or stryker HTML to `project-name/stryker/` on the `gh-pages` branch
+4. In the project's CI, push coverage HTML to `project-name/coverage/` on the `gh-pages` branch
 
 ### Notes
 
-- Coverage reports push on merge to `main`. Mutation reports run nightly (02:00 UTC).
-- Real report files overwrite the stubs automatically — no manual cleanup needed.
+- Coverage reports push on merge to `main`.
+- Real report files overwrite the stub automatically — no manual cleanup needed.
