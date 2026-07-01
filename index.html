@@ -24,7 +24,9 @@
       { id: 'resume-analyzer', label: 'Resume Analyzer', url: 'https://github.com/spicycoder/resume-analyzer' },
     ];
 
-    let project = projects[0].id;
+    const params = new URLSearchParams(window.location.search);
+    const initialId = params.get('project');
+    let project = initialId && projects.some(p => p.id === initialId) ? initialId : projects[0].id;
     const frame = document.getElementById('report-frame');
     const projectNav = document.getElementById('project-nav');
 
@@ -62,6 +64,7 @@
       const btn = e.target.closest('.tab');
       if (!btn) return;
       if (btn.dataset.project) project = btn.dataset.project;
+      history.replaceState(null, '', '?project=' + project);
       applyTabs();
       load();
     });
