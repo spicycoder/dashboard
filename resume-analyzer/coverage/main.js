@@ -320,7 +320,7 @@ var assemblies = [
     "name": "ResumeAnalyzer.Infrastructure",
     "classes": [
       { "name": "ResumeAnalyzer.Infrastructure.Ai.OpenAiResumeAnalyzer", "rp": "ResumeAnalyzer.Infrastructure_OpenAiResumeAnalyzer.html", "cl": 41, "ucl": 1, "cal": 42, "tl": 78, "cb": 9, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "ResumeAnalyzer.Infrastructure.InfrastructureBootstrap", "rp": "ResumeAnalyzer.Infrastructure_InfrastructureBootstrap.html", "cl": 18, "ucl": 0, "cal": 18, "tl": 49, "cb": 4, "tb": 8, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "ResumeAnalyzer.Infrastructure.InfrastructureBootstrap", "rp": "ResumeAnalyzer.Infrastructure_InfrastructureBootstrap.html", "cl": 19, "ucl": 0, "cal": 19, "tl": 50, "cb": 4, "tb": 8, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "ResumeAnalyzer.Infrastructure.Pdf.PdfTextExtractor", "rp": "ResumeAnalyzer.Infrastructure_PdfTextExtractor.html", "cl": 6, "ucl": 6, "cal": 12, "tl": 41, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
     ]},
 ];
